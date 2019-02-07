@@ -198,3 +198,9 @@ if __name__ == '__main__':
   print(r.weights)
   user = np.array([[0,0,0,1,1,0]])
   print(r.run_visible(user))
+
+#https://github.com/echen/restricted-boltzmann-machines/blob/master/rbm.py
+  
+#Explanation
+#http://deeplearning.net/tutorial/rbm.html  
+
