@@ -1,5 +1,35 @@
 from __future__ import print_function
 import numpy as np
+import numpy as np
+import pandas as pd
+
+
+df_train = pd.read_csv('example.csv')
+
+# CHecking whether data is imbalanced
+# I is output variable
+target_count = df_train.I.value_counts()
+print('Class 0:', target_count[0])
+print('Class 1:', target_count[1])
+print('Proportion:', round(target_count[0] / target_count[1], 2), ': 1')
+
+#target_count.plot(kind='bar', title='Count (target)');
+'''Random under-sampling'''
+# Class count
+count_class_0, count_class_1 = df_train.I.value_counts()
+
+# Divide by class
+df_class_0 = df_train[df_train['I'] == 0]
+df_class_1 = df_train[df_train['I'] == 1]
+
+df_class_0_under = df_class_0.sample(count_class_1)
+df_test_under = pd.concat([df_class_0_under, df_class_1], axis=0)
+
+print('Random under-sampling:')
+print(df_test_under.I.value_counts())
+
+df_test_under.I.value_counts().plot(kind='bar', title='Count (target)');
+
 
 class RBM:
   
@@ -192,15 +222,18 @@ class RBM:
     return 1.0 / (1 + np.exp(-x))
 
 if __name__ == '__main__':
-  r = RBM(num_visible = 6, num_hidden = 2)
-  training_data = np.array([[1,1,1,0,0,0],[1,0,1,0,0,0],[1,1,1,0,0,0],[0,0,1,1,1,0], [0,0,1,1,0,0],[0,0,1,1,1,0]])
+  r = RBM(num_visible = 9, num_hidden = 2)
+  training_data = df_test_under
   r.train(training_data, max_epochs = 5000)
   print(r.weights)
-  user = np.array([[0,0,0,1,1,0]])
-  print(r.run_visible(user))
+#  user = np.array([[0,0,0,1,1,0]])
+ # print(r.run_visible(user))
 
 #https://github.com/echen/restricted-boltzmann-machines/blob/master/rbm.py
   
 #Explanation
 #http://deeplearning.net/tutorial/rbm.html  
+  
+#Datset
+#https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv
 
