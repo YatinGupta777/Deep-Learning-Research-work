@@ -54,6 +54,8 @@ classifier = SupervisedDBNClassification(hidden_layers_structure=[256, 256],
                                          batch_size=32,
                                          activation_function='relu',
                                          dropout_p=0.2)
+X_train = X_train.values
+Y_train = Y_train.values
 classifier.fit(X_train, Y_train)
 
 # Save the model
