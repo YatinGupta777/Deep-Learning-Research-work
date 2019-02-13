@@ -30,8 +30,8 @@ df_train_under = pd.concat([df_class_0_under, df_class_1], axis=0)
 
 df_train_under = df_train_under.reset_index(drop=True)
 
-#print('Random under-sampling:')
-#print(df_train_under.I.value_counts())
+print('Random under-sampling:')
+print(df_train_under.I.value_counts())
 '''Source'''
 #https://github.com/albertbup/deep-belief-network
 
@@ -54,6 +54,8 @@ classifier = SupervisedDBNClassification(hidden_layers_structure=[256, 256],
                                          batch_size=32,
                                          activation_function='relu',
                                          dropout_p=0.2)
+
+'''Converting to numpy array'''
 X_train = X_train.values
 Y_train = Y_train.values
 classifier.fit(X_train, Y_train)
